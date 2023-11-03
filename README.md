@@ -1,16 +1,17 @@
 # Final Year Project: nomnomcal
 
-Additional tech stack to install:
-Android Studio
-PostMan API
+# Additional tech stack to install:
+Android Studio, 
+PostMan API, 
+MongoDB, 
 Expo Go (from mobile app)
 
-To start using app:
-Open a new terminal:
+# To start using app:
+# Open a new terminal:
 PS C:\Project\FYPnomnomcal> cd .\server\
 PS C:\Project\FYPnomnomcal\server> npm run server
 
-The following will appear:
+# The following will appear:
 > server@1.0.0 server
 > nodemon server.js
 
@@ -22,11 +23,11 @@ The following will appear:
 Server Running 5000
 Connected to DATEBASE ac-rbnsdkb-shard-00-01.canz8te.mongodb.net
 
-Open a new terminal:
+# Open a new terminal:
 PS C:\Project\FYPnomnomcal> cd .\client\
 PS C:\Project\FYPnomnomcal\client> npm start
 
-The following will appear:
+# The following will appear:
 > client@1.0.0 start
 > expo start
 
