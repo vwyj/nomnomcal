@@ -7,28 +7,33 @@ import axios from 'axios';
 const Account = () => {
     // Global State
     const [state, setState] = useContext(AuthContext);
-    const {user} =state;
+    const {user, token} =state;
     // Local State
     const[name, setName] = useState(user?.name);
-    const[email] = useState(user?.email);
     const[password, setPassword] = useState(user?.password);
+    const[email] = useState(user?.email);
     const[loading, setLoading] =useState(false);
 
     // Handle Update User Data
     const handleUpdate = async() => {
         try
         {
-            setLoading(true)
-            const {data} = await axios.put("/auth/update-user", {
+            setLoading(true);
+            const {data} = await axios.put("/auth/update-user", 
+            {
                 name, password, email
-            });
+            },
+            // {
+            //     headers: { Authorization: `Bearer ${token && token}`,}
+            // }
+            );
             
             setLoading(false);
             let UD = JSON.stringify(data);
-            setState({...state, user:UD?.updatedUser});
+            setState({ ...state, user: UD?.updatedUser });
             alert(data && data.message);
         }
-        catch
+        catch (error)
         {
             alert(error.response.data.message);
             setLoading(false);
