@@ -22,11 +22,7 @@ const Account = () => {
             const {data} = await axios.put("/auth/update-user", 
             {
                 name, password, email
-            },
-            // {
-            //     headers: { Authorization: `Bearer ${token && token}`,}
-            // }
-            );
+            });
             
             setLoading(false);
             let UD = JSON.stringify(data);
