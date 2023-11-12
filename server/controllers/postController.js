@@ -36,4 +36,28 @@ const createPostController = async (req, res) => {
     }
 };
 
-module.exports = { createPostController };
+// GET ALL POSTS
+const getAllPostsController = async (req, res) => {
+    try 
+    {
+        const posts = await postModel.find()
+            .populate("postedBy", "_id name")
+            .sort({ createdAt: -1 });
+        res.status(200).send({
+            success: true,
+            message: "All Posts Data",
+            posts,
+        });
+    }
+    catch (error)
+    {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error in GETALLPOSTS API',
+            error
+        });
+    }
+};
+
+module.exports = { createPostController, getAllPostsController };

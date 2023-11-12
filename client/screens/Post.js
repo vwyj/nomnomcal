@@ -40,7 +40,7 @@ const Post = ({navigation}) => {
         <View style={ styles.container }>
             <ScrollView>
                 <View style={{alignItems: "center"}}>
-                    <Text style={styles.header}>Create a Post</Text>
+                    <Text style={styles.header}>Create Post</Text>
                     <TextInput style={styles.inputBox} 
                         placeholder="Add Post Title"
                         placeholderTextColor={"gray"}
