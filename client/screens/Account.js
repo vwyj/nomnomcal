@@ -12,9 +12,12 @@ const Account = () => {
     const[name, setName] = useState(user?.name);
     const[password, setPassword] = useState(user?.password);
     const[email] = useState(user?.email);
-    const[loading, setLoading] =useState(false);
+    const[loading, setLoading] =useState(false);    // loading: a state variable to track whether data is currently being updated
 
     // Handle Update User Data
+    // handleUpdate: makes a PUT request to update user data
+    // Set loading state to true to indicate that data is being updated
+    // Use axios.put to make a PUT request to the server's /auth/update-user endpoint with the updated user data
     const handleUpdate = async() => {
         try
         {
@@ -37,9 +40,11 @@ const Account = () => {
         }
     };
 
+    // Render UI Components
     return (
         <View style = {styles.container}>
             <ScrollView>
+            // Display Profile Image and Warning Text
                 <View style={{ alignItems:  "center" }}>
                     <Image source={{ uri:"https://cdn-icons-png.flaticon.com/512/3177/3177440.png"}}
                     style={{ height: 200, width: 200, borderRadius: 100 }}
@@ -49,6 +54,7 @@ const Account = () => {
                     Currently, you are only able to update your name and password*
                 </Text>
 
+                // Handle Input Fields
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputText}>Name</Text>
                     <TextInput 
@@ -86,6 +92,9 @@ const Account = () => {
                     />
                 </View>
 
+                // Handle Update Button
+                // Creates a button (TouchableOpacity) to trigger the handleUpdate function
+                // Displays different text on the button based on the loading state
                 <View style={{alignItems: "center"}}>
                     <TouchableOpacity style={styles.updateBtn} onPress={handleUpdate}>
                         <Text style={styles.updateBtnText}>{loading ? "Please Wait" : "Update Profile"}</Text>
@@ -93,6 +102,8 @@ const Account = () => {
                 </View>
             </ScrollView>
             
+            // Renders the FooterMenu component at the bottom of the screen
+            // Applies styling to position it at the bottom using flex and justifyContent
             <View style = {{ flex: 1, justifyContent: "flex-end" }}>
                 <FooterMenu/>
             </View>  

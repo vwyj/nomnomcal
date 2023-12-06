@@ -6,13 +6,13 @@ import SubmitButton from '../../components/Forms/SubmitButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-/* LOGIN PAGE */
+// LOGIN PAGE
 const Login = ({ navigation }) => {
 
   // Global State
   const[state, setState] = useContext(AuthContext);
 
-  // States
+  // States using useState hook
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
@@ -21,6 +21,7 @@ const Login = ({ navigation }) => {
   // Button Function
   const handleSubmit = async () => {
     try{
+      // Validation: Check if email and password are not empty
       if (!email || !password)
       {
         Alert.alert('Please Fill In All Fields');
@@ -28,11 +29,17 @@ const Login = ({ navigation }) => {
         return;
       }
       setLoading(false);
+      // Make a POST request to the login endpoint
       const { data } = await axios.post("/auth/login", { email, password });
+      // Update global state
       setState(data);
+      // Store authentication data in AsyncStorage
       await AsyncStorage.setItem("@auth",JSON.stringify(data));
+      // Display success message
       alert(data && data.message);
+      // Navigate to Home screen on successful login
       navigation.navigate("Home");
+      // Logging login data to console
       console.log("Login Data==> ", { email, password });
     }
     catch(error)
@@ -49,11 +56,15 @@ const Login = ({ navigation }) => {
     console.log("Local Storage ==> ", data);
   };
 
+  // Invoke getLocalStorageData function
   getLocalStorageData();
+  // Render UI
   return (
     <View style={styles.container}>
+      // Page Title
       <Text style={styles.pageTitle}>Login</Text>
       <View style={{ marginHorizontal: 20 }}>
+      // InputBox for Email
       <InputBox 
         inputTitle={"Email"} 
         keyboardType='email-address' 
@@ -62,6 +73,7 @@ const Login = ({ navigation }) => {
         setValue={setEmail} 
       />
       
+      // InputBox for Password
       <InputBox 
         inputTitle={"Password"} 
         secureTextEntry={true} 
@@ -71,13 +83,17 @@ const Login = ({ navigation }) => {
       />
       </View>
       {/* <Text>{JSON.stringify({ name, email, password }, null, 4)}</Text> */}
+
+      // SubmitButton component to handle login
       <SubmitButton 
         btnTitle="Login" 
         loading={loading}
         handleSubmit={handleSubmit}
       />
+
+      // Link to Register Page
       <Text style={styles.linkText}> 
-        Not a User? Please{" "} 
+        Not a Registered User? Please{" "} 
         <Text 
             style={styles.link} 
             onPress={() => navigation.navigate("Register")}> 

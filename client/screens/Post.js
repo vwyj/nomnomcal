@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
 
 const Post = ({navigation}) => {
-    // Local State
+    // Local State using useState hook
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
@@ -14,7 +14,8 @@ const Post = ({navigation}) => {
     const  handlePost = async () => {
         try
         {
-            setLoading(true);
+            setLoading(true);   // set loading to true
+            // Validate title and description
             if (!title)
             {
                 alert("Please add Post Title");
@@ -23,10 +24,11 @@ const Post = ({navigation}) => {
             {
                 alert("Please add Post Description");
             }
+            // Make a POST request to create a new post
             const {data} = await axios.post("/post/create-post", {title, description});
-            setLoading(false);
-            alert(data?.message);
-            navigation.navigate("Home");
+            setLoading(false);  // set loading to false
+            alert(data?.message);   // show success message
+            // navigation.navigate("Home");    // Navigate to Home screen after successful post creation
         }
         catch (error)
         {
@@ -36,11 +38,17 @@ const Post = ({navigation}) => {
         }
     }
 
+    // Render UI
     return (
+        // Top-level container View
         <View style={ styles.container }>
+            // ScrollView to scroll content
             <ScrollView>
                 <View style={{alignItems: "center"}}>
+                    // Header text create post
                     <Text style={styles.header}>Create Post</Text>
+                    
+                    // TextInput to add post title
                     <TextInput style={styles.inputBox} 
                         placeholder="Add Post Title"
                         placeholderTextColor={"gray"}
@@ -48,6 +56,7 @@ const Post = ({navigation}) => {
                         onChangeText={(text) => setTitle(text)}
                     />
 
+                    // TextInput to add post description
                     <TextInput style={styles.inputBox} 
                         placeholder="Add Post Description"
                         placeholderTextColor={"gray"}
@@ -59,6 +68,7 @@ const Post = ({navigation}) => {
                 </View>
 
                 <View style={{ alignItems: "center" }}>
+                    // TouchableOpacity to trigger handlePost function
                     <TouchableOpacity style={styles.postBtn} onPress={handlePost}>
                         <Text style={styles.postBtnText}>
                         <FontAwesome5 name="plus-square" size={18} /> {" "}
@@ -67,7 +77,9 @@ const Post = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            // Bottom container View with FooterMenu
             <View style = {{ flex: 1, justifyContent: "flex-end" }}>
+                // Render FooterMenu component
                 <FooterMenu/>
             </View>  
         </View>

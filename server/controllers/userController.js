@@ -1,20 +1,26 @@
-const JWT = require('jsonwebtoken');
-const { hashPassword, comparePassword } = require('../helpers/authHelper');
-const userModel = require('../models/userModel');
-var { expressjwt: jwt } =  require('express-jwt');
+const JWT = require('jsonwebtoken');    // jsonwebtoken library to handle JSON Web Tokens (JWT)
+const { hashPassword, comparePassword } = require('../helpers/authHelper'); //  import hashPassword and comparePassword functions from authHelper module for password hashing and comparison
+const userModel = require('../models/userModel');   // userModel: contains the Mongoose model for users
+var { expressjwt: jwt } =  require('express-jwt');  //  express-jwt: used for verifying JWTs in Express.js middleware
 
-// Middleware
+// Middleware Authentication
+// Configure a middleware requireSignIn using express-jwt
+// This middleware is designed to ensure that incoming requests have a valid JWT in the "Authorization" header
+// It uses the JWT secret from the environment variable JWT_SECRET and specifies the HMAC SHA-256 algorithm
 const requireSignIn = jwt({
     secret: process.env.JWT_SECRET, 
     algorithms: ["HS256"],
 });
 
-// Register
+// Register Controller
+// Declares an asynchronous function named registerController that takes two parameters: req (request) and res (response)
 const registerController = async (req, res) => {
     try
     {
+        // Parse Request and Validate Data
+        // Destructures name, email, password from request body (req.body)
+        // Validates whether all required fields are present, and if password is at least 6 characters long
         const {name, email, password} = req.body;
-        // Validation
         if (!name)
         {
             return res.status(400).send({
@@ -39,7 +45,8 @@ const registerController = async (req, res) => {
             });
         }
         
-        // Existing User
+        // Check for Existing User
+        // Checks if user with the same email already exists in the database
         const existingUser = await userModel.findOne({ email });
         if (existingUser)
         {
@@ -49,17 +56,21 @@ const registerController = async (req, res) => {
             });
         }
 
-        // Hashed Password
+        // Hash Password and Save User
+        // Call hashPassword to hash the user's password
+        // Save a new user to the database using the userModel
+        // The password stored in the database is the hashed password  
         const hashedPassword = await hashPassword(password);
-
-        // Save User
         const user = await userModel({ name, email, password:hashedPassword, }).save();
 
+        // Send response for Successful Registration
         return res.status(201).send({
             success: true,
             message: "Registration Successful! Please Login",
         });
     }
+
+    // Handle Errors in Registration
     catch (error)
     {
         console.log(error);
@@ -72,11 +83,14 @@ const registerController = async (req, res) => {
 };
 
 // Login
+// Declare an asynchronous function named loginController that takes two parameters: req (request) and res (response)
 const loginController = async (req, res) => {
     try
     {
+        // Parse Request Body and Validate Data
+        // Destructure email and password from request body (req.body)
+        // Validates whether both email and password are present
         const {email, password} = req.body;
-        // Validation
         if (!email || !password)
         {
             return res.status(500).send({
@@ -86,7 +100,9 @@ const loginController = async (req, res) => {
         }
         
         // Find User
-        const user = await userModel.findOne({email})
+        // Find a user with the provided email in the database using the userModel
+        // Check if the user exists; if not, send an error response
+        const user = await userModel.findOne({ email })
         if(!user)
         {
             return res.status(500).send({
@@ -96,6 +112,7 @@ const loginController = async (req, res) => {
         }
         
         // Match Password
+        // Use the comparePassword function to compare the provided password with the hashed password stored in the database
         const match = await comparePassword(password, user.password);
         if(!match)
         {
@@ -106,10 +123,13 @@ const loginController = async (req, res) => {
         }
         
         // TOKEN 
+        // Generate JWT token with the user's _id as the payload
+        // The JWT is signed using the secret from the environment variable JWT_SECRET and is set to expire in 7 days
         const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {expiresIn:"7d"});
 
         // Undefined Password
-        user.password = undefined;
+        // Send Response for Successful Login
+        user.password = undefined;  //  password is set to undefined
         res.status(200).send({
             success: true,
             message: "Login Successfully",
@@ -117,6 +137,8 @@ const loginController = async (req, res) => {
             user,
         });
     }
+
+    // Handling Errors in Login
     catch (error)
     {
         console.log(error);
@@ -129,13 +151,17 @@ const loginController = async (req, res) => {
 };
 
 // Update User
+// Declare an asynchronous function named updateUserController that takes two parameters: req (request) and res (response)
 const updateUserController = async (req, res) => {
     try
     {
+        // Parse Request Body
+        // Destructure name, password, email from request body (req.body)
         const {name, password, email} = req.body;
-        // Find User
+        // Find User and Validate Password
+        // Find user with the provided email in the database
+        // Validate password length when password is provided
         const user = await userModel.findOne({email});
-        // Password Validation
         if (password && password.length < 6)
         {
             return res.status(400).send({
