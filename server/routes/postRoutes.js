@@ -1,7 +1,3 @@
-// Summary: set-up an Express router with two routes: 1.create a post (/create-post) 2.retrieve all posts (/get-all-post)
-// The router uses middleware (requireSignIn) to ensure authentication for creating a post. 
-// The actual handling of these routes is delegated to controller functions (createPostController and getAllPostsController).
-
 const express = require('express');     // to create an Express router
 const { requireSignIn } = require('../controllers/userController');
 const { createPostController, getAllPostsController } = require('../controllers/postController');

@@ -4,12 +4,9 @@ import { AuthContext } from '../context/authContext';
 import FooterMenu from '../components/Menus/FooterMenu';
 
 const Home = () => {
-    // Destructuring the context value to get Global State
+    // Global State
     const [state] = useContext(AuthContext);
-
-    // Render UI
     return (
-        // Top-level container View
         <View style = { styles.container }>
             <ScrollView>
                 <Text>{JSON.stringify(state, null, 4)}</Text>

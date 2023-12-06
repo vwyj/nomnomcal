@@ -1,11 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 
-// SubmitButton: reusable button component
 const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
   return (
     <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
-        //Text component to display button text
         <Text style={styles.btnText}>
           {loading ? "Please Wait...": btnTitle}
         </Text>

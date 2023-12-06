@@ -4,9 +4,9 @@ import InputBox from '../../components/Forms/InputBox';
 import SubmitButton from '../../components/Forms/SubmitButton';
 import axios from 'axios';
 
-// REGISTER PAGE
+/* REGISTER PAGE */
 const Register = ({ navigation }) => {
-  // States using useState hook
+  // States
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +16,6 @@ const Register = ({ navigation }) => {
   // Button Function
   const handleSubmit = async () => {
     try{
-      // Validation: Check if name, email, and password are not empty
       if (!name || !email || !password)
       {
         Alert.alert("Please Fill In All Fields");
@@ -24,13 +23,9 @@ const Register = ({ navigation }) => {
         return;
       }
       setLoading(false);
-      // Make POST request to register endpoint
       const { data } = await axios.post("/auth/register", { name, email, password });
-      // Display success message
       alert(data && data.message);
-      // Navigate to Login screen on successful registration
       navigation.navigate("Login");
-      // Logging register data to the console
       console.log("Register Data==> ", { name, email, password });
     }
     catch(error)
@@ -41,21 +36,17 @@ const Register = ({ navigation }) => {
     }
   };
 
-  // Render UI
   return (
     <View style={styles.container}>
-      // Page Title
       <Text style={styles.pageTitle}>Register</Text>
       <View style={{ marginHorizontal: 20 }}>
       
-      // InputBox for Nam
       <InputBox 
         inputTitle={"Name"} 
         value={name}
         setValue={setName}
       />
       
-      // InputBox for Email
       <InputBox 
         inputTitle={"Email"} 
         keyboardType='email-address' 
@@ -64,7 +55,6 @@ const Register = ({ navigation }) => {
         setValue={setEmail} 
       />
       
-      // InputBox for Password
       <InputBox 
         inputTitle={"Password"} 
         secureTextEntry={true} 
@@ -76,14 +66,12 @@ const Register = ({ navigation }) => {
       </View>
       {/* <Text>{JSON.stringify({ name, email, password }, null, 4)}</Text> */}
       
-      // SubmitButton component to handle registration
       <SubmitButton 
         btnTitle="Register" 
         loading={loading}
         handleSubmit={handleSubmit}
       />
 
-      // Link to Login Page
       <Text style={styles.linkText}>
         Already Register Please{" "}
         <Text 

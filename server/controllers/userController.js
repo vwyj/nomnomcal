@@ -12,7 +12,7 @@ const requireSignIn = jwt({
     algorithms: ["HS256"],
 });
 
-// Register Controller
+// Register
 // Declares an asynchronous function named registerController that takes two parameters: req (request) and res (response)
 const registerController = async (req, res) => {
     try

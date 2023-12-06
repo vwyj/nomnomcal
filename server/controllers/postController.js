@@ -6,7 +6,6 @@ const postModel = require("../models/postModel");   // Import postModel which co
 const createPostController = async (req, res) => {   
     try                                             
     {
-        // Parse Request Body and Validate Data
         // Destructures title and description from the request body (req.body)
         // Validate whether both title and description are present in the request body
         // If either is missing, it sends a 500 status response with a failure message
@@ -19,7 +18,6 @@ const createPostController = async (req, res) => {
             });
         }
 
-        // Create and Save a Post
         // Creates a new post instance using the postModel with user-provided title, description, id
         // Call save method to save post to database; Result is assigned to the variable post
         const post = await postModel({
@@ -57,7 +55,6 @@ const createPostController = async (req, res) => {
 const getAllPostsController = async (req, res) => {
     try 
     {
-        // Fetch All Posts and Populate PostedBy Field
         // Use postModel to find all posts in the database
         // Calls populate method to replace the postedBy field with the specified fields ("_id name") from the referenced user model
         // Calls sort method to sort the posts based on createdAt field in descending order

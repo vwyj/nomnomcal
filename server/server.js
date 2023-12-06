@@ -1,6 +1,3 @@
-// Summary: set-up Node.js server using Express, connect to MongoDB database, configure middleware for handling requests,
-// define routes for user authentication and post-related operations, and start server on specified port
-
 const express = require("express");         // Express.js framework: used to build web applications
 const cors    = require("cors");            // CORS middleware: Cross-Origin Resource Sharing to handle requests from different origins
 const dotenv  = require("dotenv");          // dotenv: load environment variables from a .env file into process.env
@@ -8,7 +5,7 @@ const colors  = require("colors");          // colors: provides colors to consol
 const morgan  = require("morgan");          // Morgan middleware: used to log HTTP requests
 const connectDB = require("./config/db");   // Connect to MongoDB database
 
-// Load Environment Variables
+// DOTENV
 // To store configuration information in a separate file
 dotenv.config();
 
@@ -23,12 +20,12 @@ app.use(cors());            // Adds the CORS middleware to allow cross-origin re
 app.use(express.json());    // Parses incoming requests with JSON payloads: to make the data available in req.body
 app.use(morgan("dev"));     // Configure Morgan to log HTTP requests in development mode
 
-// Define Routes
+// Define ROUTES
 // Mount the userRoutes and postRoute
 app.use("/api/v1/auth", require("./routes/userRoutes"));
 app.use("/api/v1/post", require("./routes/postRoutes"));
 
-// Set-up Server Port
+// Set-up Server PORT
 // Define the server port: uses the value from the environment variable PORT if available; if not, it defaults to port 5000
 const PORT = process.env.PORT || 5000;
 

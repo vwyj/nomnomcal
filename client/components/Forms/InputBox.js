@@ -1,13 +1,10 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 
-// InputBox: reusable input component
 const InputBox = ({ inputTitle, keyboardType, autoComplete, secureTextEntry=false, value, setValue }) => {
   return (
     <View>
-      // Display input title
       <Text>{inputTitle}</Text>
-      // TextInput component for user input
       <TextInput 
       style={styles.inputBox}
       autoCorrect={false}
