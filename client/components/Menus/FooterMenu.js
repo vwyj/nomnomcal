@@ -19,6 +19,15 @@ const FooterMenu = () => {
         <Text>Home</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => navigation.navigate("Recipe")}>
+        <FontAwesome5 
+            name="plus-square" 
+            style={styles.iconStyle} 
+            color={route.name === "Recipe" && "orange"}
+        />
+        <Text>Recipe</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate("Post")}>
         <FontAwesome5 
             name="plus-square" 
@@ -60,6 +69,7 @@ const styles = StyleSheet.create({
     iconStyle:
     {
         marginBottom: 3,
+        marginHorizontal: 5,
         alignSelf: "center",
         fontSize: 25,
     },

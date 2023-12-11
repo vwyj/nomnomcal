@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/authContext';
 import HeaderMenu from './HeaderMenu';
 
 import Home from '../../screens/Home';
+import Recipe from '../../screens/Recipe';
 import Post from '../../screens/Post';
 import About from '../../screens/About';
 import Account from '../../screens/Account';
@@ -27,6 +28,15 @@ const ScreenMenu = () => {
                     component={Home}
                     options={{
                         title: "nomnomcal",
+                        headerRight: () => <HeaderMenu/>,
+                    }}
+                />
+
+                <Stack.Screen 
+                    name="Recipe"
+                    component={Recipe}
+                    options={{
+                        title: "Recipes",
                         headerRight: () => <HeaderMenu/>,
                     }}
                 />

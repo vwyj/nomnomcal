@@ -6,7 +6,7 @@ import SubmitButton from '../../components/Forms/SubmitButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-/* LOGIN PAGE */
+{/* LOGIN PAGE */}
 const Login = ({ navigation }) => {
 
   // Global State
@@ -20,7 +20,8 @@ const Login = ({ navigation }) => {
   // Function
   // Button Function
   const handleSubmit = async () => {
-    try{
+    try
+    {
       if (!email || !password)
       {
         Alert.alert('Please Fill In All Fields');
