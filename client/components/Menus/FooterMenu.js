@@ -14,7 +14,7 @@ const FooterMenu = () => {
         <FontAwesome5 
           name="home" 
           style={styles.iconStyle}
-          color={route.name === "Home" && "orange"}
+          color={route.name === "Home" && "#41A381"}
         />
         <Text>Home</Text>
         </TouchableOpacity>
@@ -23,7 +23,7 @@ const FooterMenu = () => {
         <FontAwesome5 
             name="plus-square" 
             style={styles.iconStyle} 
-            color={route.name === "Recipe" && "orange"}
+            color={route.name === "Recipe" && "#41A381"}
         />
         <Text>Recipe</Text>
         </TouchableOpacity>
@@ -32,7 +32,7 @@ const FooterMenu = () => {
         <FontAwesome5 
             name="plus-square" 
             style={styles.iconStyle} 
-            color={route.name === "Post" && "orange"}
+            color={route.name === "Post" && "#41A381"}
         />
         <Text>Post</Text>
         </TouchableOpacity>
@@ -41,7 +41,7 @@ const FooterMenu = () => {
         <FontAwesome5 
           name="info-circle" 
           style={styles.iconStyle}
-          color={route.name === "About" && "orange"}
+          color={route.name === "About" && "#41A381"}
         />
         <Text>About</Text>
         </TouchableOpacity>
@@ -50,7 +50,7 @@ const FooterMenu = () => {
         <FontAwesome5 
           name="user" 
           style={styles.iconStyle}
-          color={route.name === "Account" && "orange"}
+          color={route.name === "Account" && "#41A381"}
         />
         <Text>Account</Text>
         </TouchableOpacity>

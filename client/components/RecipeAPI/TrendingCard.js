@@ -1,46 +1,78 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
+// import { fetchDetails, fetchRecommendations } from '../context/api';
 
-const RecipeCardDetails =({ recipeItem }) => {
+const RecipeCardDetails =({ }) => {
+
+    // const [recommendations, setRecommendations] = useState([]);
+    
+    // useEffect(() => 
+    // {
+    //     fetchDetails(recommendations).then((data) => 
+    //     {
+    //         console.log("Recipe Details: ", data);
+    //         setDetails(data);   // Setting Recipe Recommendations From API
+    //     })
+    //     .catch((error) => console.error("Error Fetching Recommendations:", error));
+
+    // }, [recommendations]);
+
+    const [recommendations, setRecommendations] = useState([]);
+
+  useEffect(() => {
+        // Fetch 10 random recipes when the component mounts
+    const fetchRandomRecipes = async () => {
+      try {
+        const recipes = await fetchFeatured(10);
+        setRecommendations(recipes);
+      } catch (error) {
+          // Handle error if needed
+        console.error("Error fetching random recipes:", error);
+      }
+    };
+
+    fetchRandomRecipes();
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
-      {/* Name & Bookmark */}
+      
+      {/* Name */}
       <View style={ styles.recipeCardDetailsContainer }>
         <Text style={ styles.nameBookmark }>
-          {recipeItem.name}
-          </Text>
+          {recommendations.title}
+        </Text>
       </View>
 
       {/* Duration & Serving */}
         <Text style={ styles.durationServing }>
-          {recipeItem.duration} | {recipeItem.serving} Serving
+          {recommendations.duration} mins | {recommendations.serving} Servings
         </Text>
 
     </View>
-  )
-}
+  );
+};
 
-const RecipeCardInfo = ({ recipeItem }) => {
+const RecipeCardInfo = ({}) => {
   return(
     <View
       style={styles.recipeCardContainer}
     >
       <RecipeCardDetails
-        recipeItem={recipeItem}
+        recommendations={recommendations}
       />
     </View>
   )
 }
 
-const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
+const TrendingCard = ({ onPress }) => {
   return (
     <TouchableOpacity 
       style={styles.container}
       onPress={onPress}
     >
       <Image
-        // source={recipeItem.Image}
-        source={{ uri:"https://www.kuali.com/wp-content/uploads/2016/06/Sarawak-Laksa-e1467268532122.jpg"}}
+        source={{ uri: recommendations.image }}
         resizeMode='cover'
         style={styles.imageSize}
       />
@@ -48,13 +80,13 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
       {/* Category */}
       <View style={styles.categoryFormat}>
         <Text style={styles.categoryFontFormat}>
-          {recipeItem.category}
+          {recommendations.category}
         </Text>
       </View>
 
       {/* Card Info */}
       <RecipeCardInfo 
-        recipeItem={recipeItem}
+        recommendations={recommendations}
       />
 
     </TouchableOpacity>

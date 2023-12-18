@@ -6,12 +6,16 @@ import HeaderMenu from './HeaderMenu';
 
 import Home from '../../screens/Home';
 import Recipe from '../../screens/Recipe';
+import RecipeDescription from '../../screens/RecipeDescription';
 import Post from '../../screens/Post';
+import PostCompilation from '../../screens/PostCompilation';
+import MyRecipePosts from '../../screens/MyRecipePosts';
 import About from '../../screens/About';
 import Account from '../../screens/Account';
 
 import Register from '../../screens/auth/Register';
 import Login from '../../screens/auth/Login';
+
 
 const ScreenMenu = () => {
     // Global State
@@ -42,9 +46,39 @@ const ScreenMenu = () => {
                 />
 
                 <Stack.Screen 
+                    name="Recipe Description"
+                    component={RecipeDescription}
+                    options={{
+                        title: "Recipe",
+                        headerRight: () => <HeaderMenu/>,
+                    }}
+                />
+
+                <Stack.Screen 
                     name="Post"
                     component={Post}
                     options={{
+                        title: "Personal Recipe",
+                        headerBackTitle: "Back",
+                        headerRight: () => <HeaderMenu/>,
+                    }}
+                />
+
+                <Stack.Screen 
+                    name="PostCompilation"
+                    component={PostCompilation}
+                    options={{
+                        title: "Community Recipes",
+                        headerBackTitle: "Back",
+                        headerRight: () => <HeaderMenu/>,
+                    }}
+                />
+
+                <Stack.Screen 
+                    name="MyRecipePosts"
+                    component={MyRecipePosts}
+                    options={{
+                        title: "My Recipes",
                         headerBackTitle: "Back",
                         headerRight: () => <HeaderMenu/>,
                     }}
