@@ -1,26 +1,14 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useContext } from 'react';
 import FooterMenu from '../components/Menus/FooterMenu';
 import { PostContext } from '../context/postContext';
-import RecipePost from "../components/RecipePost";
+import RecipePost from "../components/RecipeAPI/RecipePost";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const PostCompilation = ({ navigation }) => {
 
     // Global State
     const [posts] = useContext(PostContext);
-    // const [refreshing, setRefreshing] = useState(false);
-    // useEffect(() => {}, [getAllPosts]);
-
-    // //refresh controll
-    // const onRefresh = useCallback(() => {
-    //     setRefreshing(true);
-    //     getAllPosts;
-    //     setTimeout(() => { 
-    //         setRefreshing(false);
-    //         }, 2000);
-    // }, []);
-
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -30,19 +18,8 @@ const PostCompilation = ({ navigation }) => {
                 
                 {/* Community Recipe Posts */}
                 <View style={styles.buttons}>
-                    <TouchableOpacity 
-                        style={styles.createRecipeFormat} 
-                        onPress={() => {
-                            navigation.navigate("Post");
-                        }}
-                    >
-                    <Text style={styles.createRecipeFont}>
-                        {" "}<FontAwesome5 name="plus-square" color={"#757575"}/>
-                        {" "}Create Recipes
-                    </Text>
-                    </TouchableOpacity>
-                    
-                    {/* User's Personal Recipe Posts */}
+
+                    {/* View Personal Recipe Posts */}
                     <TouchableOpacity 
                         style={styles.createRecipeFormat} 
                         onPress={() => {
@@ -55,6 +32,20 @@ const PostCompilation = ({ navigation }) => {
                         {" "}View My Recipes 
                     </Text>
                     </TouchableOpacity>
+                    
+                    {/* Create Personal Recipe Posts */}
+                    <TouchableOpacity 
+                        style={styles.createRecipeFormat} 
+                        onPress={() => {
+                            navigation.navigate("Post");
+                        }}
+                    >
+                    <Text style={styles.createRecipeFont}>
+                        {" "}<FontAwesome5 name="plus-square" color={"#757575"}/>
+                        {" "}Create Recipes
+                    </Text>
+                    </TouchableOpacity>
+        
                 </View>
             </View>
 

@@ -14,7 +14,6 @@ const Post = ({ navigation }) => {
     const [ingredients, setIngredients] = useState("");
     const [instructions, setInstructions] = useState("");
     const [calorie, setCalorie] = useState("");
-    const [loading, setLoading] = useState(false);
 
     // Handle form data personal recipe DATA
     const  handlePost = async () => {
@@ -57,7 +56,7 @@ const Post = ({ navigation }) => {
                 <View style={{alignItems: "center"}}>
                     <Text style={styles.header}>Personal Recipe</Text>
                     <TextInput style={styles.inputBox} 
-                        placeholder="Add Recipe Title"
+                        placeholder="Add Recipe Name"
                         placeholderTextColor={"gray"}
                         value={title}
                         onChangeText={(text) => setTitle(text)}
@@ -87,6 +86,7 @@ const Post = ({ navigation }) => {
                         multiline={false}
                         value={calorie}
                         onChangeText={(number) => setCalorie(number)}
+                        keyboardType="numeric"
                     />
                 </View>
 
@@ -129,21 +129,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingLeft: 15,
         borderColor: "gray",
-        borderWidth: 1,
         borderRadius: 10,
+        elevation: 3,
     },
     inputBoxSmall:
     {
         backgroundColor: "#ffffff",
         textAlignVertical:"top",
         paddingTop: 10,
-        width: 100,
+        width: 60,
         marginTop: 20,
         fontSize: 16,
         paddingLeft: 15,
         borderColor: "gray",
-        borderWidth: 1,
         borderRadius: 10,
+        elevation: 3,
     },
     postBtn:
     {

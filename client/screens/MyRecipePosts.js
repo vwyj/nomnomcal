@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import RecipePost from "../components/RecipePost";
+import RecipePost from "../components/RecipeAPI/RecipePost";
 import FooterMenu from '../components/Menus/FooterMenu';
 
 const MyRecipePosts = () => {
@@ -35,7 +35,7 @@ const MyRecipePosts = () => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <RecipePost posts={posts}/>
+                <RecipePost posts={posts} myPostScreen={true} />
                 {/* <Text>{JSON.stringify(posts, null, 4)}</Text> */}
             </ScrollView>
             <FooterMenu/>

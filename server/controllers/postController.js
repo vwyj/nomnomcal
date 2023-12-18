@@ -25,7 +25,7 @@ const createPostController = async (req, res) => {
 
         res.status(201).send({
             success: true,
-            message: 'Post Created Successfully',
+            message: 'Recipe Created Successfully',
             post,
         });
         console.log(req)
@@ -108,54 +108,53 @@ const deletePostController = async (req, res) => {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: "Error in Delete Post API",
+            message: "Error in Delete Recipe API",
             error,
         });
     }
 };
   
-// // Update Post
-//   const updatePostController = async (req, res) => {
-//     try 
-//     {
-//       const { title, description } = req.body;
+// Update Post
+const updatePostController = async (req, res) => {
+    try 
+    {
+        const { title, ingredients, instructions, calorie } = req.body;
       
-//       // Find Post
-//       const post = await postModel.findById({ _id: req.params.id });
+        // Find Post
+        const post = await postModel.findById({ _id: req.params.id });
       
-//       // Validation
-//       if (!title || !description) 
-//       {
-//         return res.status(500).send({
-//           success: false,
-//           message: "Please Provide Recipe Title or Description",
-//         });
-//       }
-//       const updatedPost = await postModel.findByIdAndUpdate(
-//         { _id: req.params.id },
-//         {
-//           title: title || post?.title,
-//           description: description || post?.description,
-//         },
-//         { new: true }
-//       );
-//       res.status(200).send({
-//         success: true,
-//         message: "Recipe has Successfully Updated",
-//         updatedPost,
-//       });
-//     } 
-//     catch (error) 
-//     {
-//       console.log(error);
-//       res.status(500).send({
-//         success: false,
-//         message: "Error in Update Recipe API",
-//         error,
-//       });
-//     }
-// };
+        // Validation
+        if (!title || !ingredients || !instructions || !calorie) 
+        {
+            return res.status(500).send({
+                success: false,
+                message: "Please make sure to fill in the Recipe Name, Ingredients, Instructions, and Calorie",
+            });
+        }
+        const updatedPost = await postModel.findByIdAndUpdate({ _id: req.params.id },
+        {
+            title: title || post?.title,
+            ingredients: ingredients || post?.ingredients,
+            instructions: instructions || post?.instructions,
+            calorie: calorie || post?.calorie,
+        }, { new: true }
+        );
+        res.status(200).send({
+            success: true,
+            message: "Recipe has been Successfully Updated!",
+            updatedPost,
+        });
+    } 
+    catch (error) 
+    {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "Error in Update Recipe API",
+        error,
+      });
+    }
+};
 
 // Export functions to be used in other parts of the application
-module.exports = { createPostController, getAllPostsController, getUserPostsController, deletePostController };
-//updatePostController
+module.exports = { createPostController, getAllPostsController, getUserPostsController, deletePostController, updatePostController };

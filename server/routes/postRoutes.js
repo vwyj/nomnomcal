@@ -1,6 +1,6 @@
 const express = require('express');     // to create an Express router
 const { requireSignIn } = require('../controllers/userController');
-const { createPostController, getAllPostsController, getUserPostsController, deletePostController } = require('../controllers/postController');
+const { createPostController, getAllPostsController, getUserPostsController, deletePostController, updatePostController } = require('../controllers/postController');
 
 // Create Router Object
 // Create an instance of an Express router using express.Router()
@@ -21,6 +21,9 @@ router.get('/get-user-post', requireSignIn, getUserPostsController);
 
 // DELETE POST
 router.delete('/delete-post/:id', requireSignIn, deletePostController);
+
+// UPDATE POST
+router.put('/update-post/:id', requireSignIn, updatePostController);
 
 // Export 
 // Exports the router object, making it available for use in other parts of the application
