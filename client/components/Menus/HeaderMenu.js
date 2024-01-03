@@ -10,6 +10,7 @@ const HeaderMenu = () => {
     // Logout
     const handleLogout  = async () => {
         setState({token:'', user:null})
+        //setState({user:null})
         await AsyncStorage.removeItem('@auth')
         alert('Logout Successfully');
     }

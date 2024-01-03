@@ -7,7 +7,9 @@ import axios from 'axios';
 const Post = ({navigation}) => {
     // Local State
     const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+    const [ingredients, setIngredients] = useState("");
+    const [instructions, setInstructions] = useState("");
+    const [calorie, setCalorie] = useState("");
     const [loading, setLoading] = useState(false);
 
     // Handle form data post DATA
@@ -19,11 +21,21 @@ const Post = ({navigation}) => {
             {
                 alert("Please add Post Title");
             }
-            if (!description)
+            if (!ingredients)
             {
-                alert("Please add Post Description");
+                alert("Please add Post ingredients");
             }
-            const {data} = await axios.post("/post/create-post", {title, description});
+            if (!instructions)
+            {
+                alert("Please add Post instructions");
+            }
+            if (!calorie)
+            {
+                alert("Please add Post calorie");
+            }
+            const {data} = await axios.post("http://192.168.18.34:5000/api/v1/post/create-post", {title, ingredients, instructions, calorie});
+            //const {data} = await axios.post("http://172.20.10.2:5000/api/v1/post/create-post", {title, ingredients, instructions, calorie});
+            
             setLoading(false);
             alert(data?.message);
             navigation.navigate("Home");
@@ -40,21 +52,40 @@ const Post = ({navigation}) => {
         <View style={ styles.container }>
             <ScrollView>
                 <View style={{alignItems: "center"}}>
-                    <Text style={styles.header}>Create Post</Text>
+                    <Text style={styles.header}>Create Recipe</Text>
                     <TextInput style={styles.inputBox} 
-                        placeholder="Add Post Title"
+                        placeholder="Add Recipe Name"
                         placeholderTextColor={"gray"}
                         value={title}
                         onChangeText={(text) => setTitle(text)}
                     />
 
                     <TextInput style={styles.inputBox} 
-                        placeholder="Add Post Description"
+                        placeholder="Add Recipe Ingredients"
                         placeholderTextColor={"gray"}
                         multiline={true}
-                        numberOfLines={6}
-                        value={description}
-                        onChangeText={(text) => setDescription(text)}
+                        numberOfLines={10}
+                        value={ingredients}
+                        onChangeText={(text) => setIngredients(text)}
+                    />
+
+
+                    <TextInput style={styles.inputBox} 
+                        placeholder="Add Recipe Instructions"
+                        placeholderTextColor={"gray"}
+                        multiline={true}
+                        numberOfLines={10}
+                        value={instructions}
+                        onChangeText={(text) => setInstructions(text)}
+                    />
+
+                     <TextInput style={styles.inputBoxSmall} 
+                        placeholder="? kCal"
+                        placeholderTextColor={"gray"}
+                        multiline={false}
+                        value={calorie}
+                        onChangeText={(number) => setCalorie(number)}
+                        keyboardType="numeric"
                     />
                 </View>
 
@@ -62,7 +93,7 @@ const Post = ({navigation}) => {
                     <TouchableOpacity style={styles.postBtn} onPress={handlePost}>
                         <Text style={styles.postBtnText}>
                         <FontAwesome5 name="plus-square" size={18} /> {" "}
-                        Create Post
+                        Create Recipe
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -84,21 +115,34 @@ const styles = StyleSheet.create({
     },
     header:
     {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: "bold",
-        textTransform: "uppercase",
     },
     inputBox:
     {
         backgroundColor: "#ffffff",
         textAlignVertical:"top",
         paddingTop: 10,
-        width: 320,
-        marginTop: 30,
+        width: 340,
+        marginTop: 20,
         fontSize: 16,
         paddingLeft: 15,
         borderColor: "gray",
-        borderWidth: 1,
+        borderRadius: 10,
+        elevation: 3,
+    },
+    inputBoxSmall:
+    {
+        backgroundColor: "#ffffff",
+        textAlignVertical:"top",
+        paddingTop: 10,
+        width: 60,
+        marginTop: 20,
+        fontSize: 16,
+        paddingLeft: 15,
+        borderColor: "gray",
+        borderRadius: 10,
+        elevation: 3,
     },
     postBtn:
     {
@@ -109,7 +153,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 10,
+        borderRadius: 15,
     },
     postBtnText: 
     {

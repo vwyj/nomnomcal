@@ -16,19 +16,18 @@ const AuthProvider = ({ children }) => {
     // Initial Local Storage Data
     useEffect(() => {
         const loadLocalStorageData = async () => {
-            let data  = await AsyncStorage.getItem("@auth");
+            let data = await AsyncStorage.getItem("@auth");
             let loginData = JSON.parse(data);
             setState({ ...state, user: loginData?.user, token: loginData?.token });
+
+            // Set Axios default headers and base URL after loading the local storage data
+            let token = loginData?.token;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.defaults.baseURL = "https://react-native-server-4tfd.onrender.com/api/v1";
         };
+
         loadLocalStorageData();
     }, []);
-
-    let token = state && state.token;
-
-    // Default Axios Setting
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    axios.defaults.baseURL = "https://react-native-server-4tfd.onrender.com/api/v1";
-
     return(
         <AuthContext.Provider value={[state, setState]}>
             {children}

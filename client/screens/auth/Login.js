@@ -1,16 +1,19 @@
-import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Alert, Image } from 'react-native';
 import React, { useState, useContext } from 'react'; 
 import { AuthContext } from '../../context/authContext';
 import InputBox from '../../components/Forms/InputBox';
 import SubmitButton from '../../components/Forms/SubmitButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import loginLogo from '../../images/logo.png';
+import { useNavigation } from '@react-navigation/native';
 
 /* LOGIN PAGE */
-const Login = ({ navigation }) => {
+const Login = () => {
+  const navigation = useNavigation();
 
   // Global State
-  const[state, setState] = useContext(AuthContext);
+  const [state, setState] = useContext(AuthContext);
 
   // States
   const [email, setEmail] = useState("");
@@ -28,15 +31,35 @@ const Login = ({ navigation }) => {
         return;
       }
       setLoading(false);
-      const { data } = await axios.post("/auth/login", { email, password });
+      // Van
+      const { data } = await axios.post("http://192.168.1.88:5000/api/v1/auth/login", { email, password });
+      // Vicky
+      // const { data } = await axios.post("http://192.168.18.34:5000/api/v1/auth/login", { email, password });
+      //const { data } = await axios.post("http://172.20.10.2:5000/api/v1/auth/login", { email, password });
       setState(data);
       await AsyncStorage.setItem("@auth",JSON.stringify(data));
       alert(data && data.message);
-      navigation.navigate("Home");
-      console.log("Login Data==> ", { email, password });
+
+      // Display last login information if needed
+      // if (data && data.user && data.user.lastLogin) {
+      //   alert(`Last Login: ${data.user.lastLogin}`);
+      // }
+
+      if(data && data.user && data.user.role !== undefined) {
+        console.log("User Role:", data.user.role);
+      
+        // if (data.user.role.toString() === 'admin') {
+        //   console.log("Navigating to HomeSysAd");
+        //   navigation.navigate('Home');
+        // } else {
+        //   console.log("Navigating to Home");
+        //   navigation.navigate('HomeSysAd');
+        // }
+      }
     }
     catch(error)
     {
+      console.error("Login Error:", error);
       alert(error.response.data.message);
       setLoading(false);
       console.log(error);
@@ -52,23 +75,31 @@ const Login = ({ navigation }) => {
   getLocalStorageData();
   return (
     <View style={styles.container}>
+      <Image
+        source={loginLogo}
+        style={styles.logo}
+      />
       <Text style={styles.pageTitle}>Login</Text>
       <View style={{ marginHorizontal: 20 }}>
-      <InputBox 
-        inputTitle={"Email"} 
-        keyboardType='email-address' 
-        autoComplete="email"
-        value={email}
-        setValue={setEmail} 
-      />
+      <TextInput
+    style={styles.input}
+    placeholder="Enter your email"
+    keyboardType="email-address"
+    autoComplete="email"
+    placeholderTextColor="#000000"
+    value={email}
+    onChangeText={setEmail}
+  />
       
-      <InputBox 
-        inputTitle={"Password"} 
-        secureTextEntry={true} 
-        autoComplete="password" 
-        value={password}
-        setValue={setPassword}
-      />
+      <TextInput
+  style={styles.input}
+  placeholder="Enter your password"
+  secureTextEntry={true}
+  autoComplete="password"
+  placeholderTextColor="#000000"
+  value={password}
+  onChangeText={setPassword}
+/>
       </View>
       {/* <Text>{JSON.stringify({ name, email, password }, null, 4)}</Text> */}
       <SubmitButton 
@@ -83,6 +114,13 @@ const Login = ({ navigation }) => {
             onPress={() => navigation.navigate("Register")}> 
             REGISTER</Text>{" "}
       </Text>
+      <Text style={styles.linkText}> 
+        Forget password? Please click{" "} 
+        <Text 
+            style={styles.link} 
+            onPress={() => navigation.navigate("Register")}> 
+            HERE</Text>{" "}
+      </Text>
     </View> 
     );
 };
@@ -92,7 +130,8 @@ const styles = StyleSheet.create({
     {
         flex: 1,
         justifyContent: "center",
-        backgroundColor: "#e1d5c9",
+        paddingHorizontal: 20,
+        backgroundColor: "#ffffff",
     },
 
     pageTitle:
@@ -101,19 +140,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         color: "#1e2225",
-        marginBottom: 20,
+        marginBottom: 50,
     },
 
-    inputBox:
-    {
-        height: 40,
-        marginBottom: 20,
-        backgroundColor: "#ffffff",
-        borderRadius: 10,
-        marginTop: 10,
-        paddingLeft: 10,
-        color: "#af9f85",
-    },
+    input: {
+      height: 40,
+      borderColor: '#E1E0E0',
+      backgroundColor: '#E6E6E6',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingLeft: 10,
+      borderRadius: 30,
+   },
 
     linkText:
     {
@@ -124,6 +162,14 @@ const styles = StyleSheet.create({
     {
       color: "red",
     },
+    
+    logo: 
+    {
+      width: 280,
+      height: 280,
+      // marginBottom: 20,
+      marginLeft: 45,
+   },
 
 });
 
