@@ -44,6 +44,7 @@ const createPostController = async (req, res) => {
 
 // GET ALL POSTS
 // Declares an asynchronous function getAllPostsController that takes two parameters: req (request) and res (response)
+// Declares an asynchronous function getAllPostsController that takes two parameters: req (request) and res (response)
 const getAllPostsController = async (req, res) => {
     try 
     {
@@ -58,6 +59,9 @@ const getAllPostsController = async (req, res) => {
             posts,
         });
     }
+
+    // Logs the error to the console
+    // Send a 500 status response with a failure message and includes the error details in the response body
     catch (error)
     {
         console.log(error);

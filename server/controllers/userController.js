@@ -14,6 +14,7 @@ const requireSignIn = jwt({
 
 // Register
 // Declares an asynchronous function named registerController that takes two parameters: req (request) and res (response)
+// Declares an asynchronous function named registerController that takes two parameters: req (request) and res (response)
 const registerController = async (req, res) => {
     try
     {
@@ -150,6 +151,10 @@ const addressObj = {
             });
         }
 
+        // Hash Password and Save User
+        // Call hashPassword to hash the user's password
+        // Save a new user to the database using the userModel
+        // The password stored in the database is the hashed password  
         // Hash Password and Save User
         // Call hashPassword to hash the user's password
         // Save a new user to the database using the userModel
@@ -467,6 +472,7 @@ const loginController = async (req, res) => {
 
 
 // Update User
+// Declare an asynchronous function named updateUserController that takes two parameters: req (request) and res (response)
 // Declare an asynchronous function named updateUserController that takes two parameters: req (request) and res (response)
 const updateUserController = async (req, res) => {
     try
