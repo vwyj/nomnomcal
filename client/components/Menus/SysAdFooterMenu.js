@@ -1,0 +1,49 @@
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+const SysAdFooterMenu = () => {
+  // Hooks
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  return (
+    <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.navigate("HomeSysAd")}>
+        <FontAwesome5 
+          name="home" 
+          style={styles.iconStyle}
+          color={route.name === "HomeSysAd" && "orange"}
+        />
+        <Text style={styles.textStyle}>Home</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("AccountSysAd")}>
+        <FontAwesome5 
+          name="user" 
+          style={styles.iconStyle}
+          color={route.name === "AccountSysAd" && "orange"}
+        />
+        <Text  style={styles.textStyle}>Account</Text>
+        </TouchableOpacity>
+  
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      margin: 5,
+      justifyContent: "space-evenly",
+    },
+  
+    iconStyle: {
+      marginBottom: 3,
+      alignSelf: "center",
+      fontSize: 25,
+    },
+});
+
+export default SysAdFooterMenu;

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "deprecated-react-native-prop-types": "^5.0.0",
+    "react-native-swipeable": "^0.6.0",
+    "react-native-swiper": "^1.6.0"
+  }
+}

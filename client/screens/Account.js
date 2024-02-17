@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TextInput, Touchable, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/authContext';
 import FooterMenu from '../components/Menus/FooterMenu';
 import axios from 'axios';
@@ -9,21 +9,61 @@ const Account = () => {
     const [state, setState] = useContext(AuthContext);
     const {user, token} =state;
     // Local State
-    const[name, setName] = useState(user?.name);
-    const[password, setPassword] = useState(user?.password);
-    const[email] = useState(user?.email);
-    const[loading, setLoading] =useState(false);
+    const [name, setName] = useState(user?.name);
+    const [password, setPassword] = useState(user?.password);
+    const [totalCalories, setTotalCalories] = useState(user?.totalCalories.toString() || '');
+    const [email] = useState(user?.email);
+    const [loading, setLoading] =useState(false);
+    const [weight, setWeight] = useState(user?.weight || '');
+    const [height, setHeight] = useState(user?.height || '');
+
+   // BMI Calculation
+    const calculateBMI = () => {
+        if (weight && height) {
+        const weightInKg = parseFloat(weight);
+        const heightInM = parseFloat(height) / 100; // Convert height to meters
+        const bmi = (weightInKg / (heightInM * heightInM)).toFixed(2);
+    
+        // BMI Categories and Risk Details
+        let category = 'N/A';
+        let risk = 'N/A';
+    
+        if (bmi >= 30.0) {
+            category = 'Obese';
+            risk = 'High Risk';
+        } else if (bmi >= 23.0 && bmi <= 29.9) {
+            category = 'Overweight';
+            risk = 'Moderate Risk';
+        } else if (bmi >= 18.5 && bmi <= 22.9) {
+            category = 'Normal';
+            risk = 'Low risk (healthy range)';
+        } else if (bmi < 18.5) {
+            category = 'Underweight';
+            risk = 'Risk of nutritional deficiency diseases and osteoporosis';
+        }
+    
+        return `${bmi} (${category}, ${risk})`;
+        }
+        return 'N/A';
+    };  
 
     // Handle Update User Data
     const handleUpdate = async() => {
         try
         {
             setLoading(true);
-            const {data} = await axios.put("/auth/update-user", 
+            const {data} = await axios.put("http://ipaddress:5000/api/v1/auth/update-user", 
+           {
+                name, password, email, totalCalories
+            },
             {
-                name, password, email
-            });
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the token in the headers
+                },
+            }
+           );
             
+        
             setLoading(false);
             let UD = JSON.stringify(data);
             setState({ ...state, user: UD?.updatedUser });
@@ -46,7 +86,7 @@ const Account = () => {
                 />
                 </View>
                 <Text style={styles.warningtext}>
-                    Currently, you are only able to update your name and password*
+                    Currently, you are only able to update your name, password and goal calorie limit*
                 </Text>
 
                 <View style={styles.inputContainer}>
@@ -84,6 +124,23 @@ const Account = () => {
                         value={state?.user.role}
                         editable={false}
                     />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputText}>Goal Calorie</Text>
+                    <TextInput 
+                        label="Total Calories"
+                        style={styles.inputBox}
+                        value={totalCalories}
+
+                        onChangeText={(text) => setTotalCalories(text)}
+                    />
+                </View>
+
+                  {/* Display BMI */}
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputText}>BMI</Text>
+                    <Text style={styles.inputBox}>{calculateBMI()}</Text>
                 </View>
 
                 <View style={{alignItems: "center"}}>

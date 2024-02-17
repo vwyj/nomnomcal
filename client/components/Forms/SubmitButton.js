@@ -5,7 +5,7 @@ const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
   return (
     <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
         <Text style={styles.btnText}>
-          {loading ? "Please Wait...": btnTitle}
+          {loading ? "Login": btnTitle}
         </Text>
     </TouchableOpacity>
   );
@@ -14,19 +14,22 @@ const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
 const styles = StyleSheet.create({
     submitBtn:
     {
-        backgroundColor: "#1e2225",
-        height: 50,
-        marginHorizontal: 25,
-        borderRadius: 80,
-        justifyContent: "center",
-        marginBottom: 20,
+      height: 50,
+      borderColor: '#7D7A7A',
+      backgroundColor: '#7D7A7A',
+      borderWidth: 1,
+      marginBottom: 10,
+      marginLeft: 20,
+      paddingLeft: 10,
+      borderRadius: 30,
+      width: 330
     },
    
     btnText: 
     {
-        color: "#ffffff",
+        color: "#000000",
         textAlign: "center",
-        fontSize: 24,
+        fontSize: 33,
         fontWeight: "400",
     }
 });

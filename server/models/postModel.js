@@ -5,13 +5,25 @@ const postSchema = new mongoose.Schema({
     title:
     {
         type: String,
-        required: [true, "Please add post title"],
+        required: [true, "Please add Recipe Name"],
     },
 
-    description:
+    ingredients:
     {
         type: String,
-        required: [true, "Please add post description"],
+        required: [true, "Please add Recipe Ingredients"],
+    },
+
+    instructions:
+    {
+        type: String,
+        required: [true, "Please add Recipe Instructions"],
+    },
+
+    calorie:
+    {
+        type: Number,
+        required: [true, "Please add amount of calorie"],
     },
 
     postedBy:

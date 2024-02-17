@@ -14,7 +14,7 @@ const PostProvider = ({ children }) => {
         setLoading(true);
         try
         {
-            const {data} = await axios.get('/post/get-all-post');
+            const {data} = await axios.get('http://ipaddress:5000/api/v1/post/get-all-post');
             setLoading(false);
             setPosts(data?.posts);
         }

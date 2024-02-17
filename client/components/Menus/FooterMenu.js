@@ -19,23 +19,35 @@ const FooterMenu = () => {
         <Text>Home</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Post")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Recipe")}>
         <FontAwesome5 
-            name="plus-square" 
+            name="utensils" 
             style={styles.iconStyle} 
-            color={route.name === "Post" && "orange"}
+            color={route.name === "Recipe" && "orange"}
         />
-        <Text>Post</Text>
+        <Text>Recipe</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("About")}>
-        <FontAwesome5 
-          name="info-circle" 
-          style={styles.iconStyle}
-          color={route.name === "About" && "orange"}
-        />
-        <Text>About</Text>
+       {/* Add Image component for the diary logo */}
+       <TouchableOpacity onPress={() => navigation.navigate("DailyDiary")}>
+       <FontAwesome5 
+            name="book-open" 
+            style={styles.iconStyle}
+            color={route.name === "DailyDiary" && "orange"}
+          />
+          <Text>Diary</Text>
         </TouchableOpacity>
+
+         {/* Replace with the "coins" icon */}
+      <TouchableOpacity onPress={() => navigation.navigate("ViewDIY")}>
+        <FontAwesome5 
+          name="coins" 
+          style={styles.iconStyle}
+          color={route.name === "ViewDIY" && "orange"}
+        />
+        <Text>Loyalty</Text>
+      </TouchableOpacity>
+
 
         <TouchableOpacity onPress={() => navigation.navigate("Account")}>
         <FontAwesome5 
